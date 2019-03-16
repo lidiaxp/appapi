@@ -1,14 +1,17 @@
 var express  = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
+    Schema = mongoose.Schema;
 
-    usuario = new mongoose.Schema({
+    var userSchema = new Schema({
       id       : String, 
-      nome     : String,
-      email   : String
-    }),
+      name: String,
+  	  username: { type: String, required: true, unique: true },
+	  password: { type: String, required: true },
+      admin: Boolean,
+    });
 
-    User = mongoose.model('User', usuario);
+    var User = mongoose.model('User', userSchema);
 
 mongoose.connect(process.env.MONGOLAB_URI, function (error) {
     if (error) console.error(error);
@@ -34,8 +37,8 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-    User.find( function ( err, users ){
-      res.json(200, users);
+    User.find({}, function ( err, pessoas ){
+      res.json(200, pessoas);
     });
   })
 
@@ -47,9 +50,9 @@ express()
     });
   })
 
-  .get('/people/:nome', function(req, res){
+  .get('/people/:name', function(req, res){
     User.findOne({
-      nome: req.params.nome
+      name: req.params.name
     })
     .exec(function(err, pessoa){
       if(err){
@@ -60,11 +63,13 @@ express()
     })
   })
 
-  .put('/people/:nome', function(req, res){
+  .put('/people/:name', function(req, res){
     User.findOneAndUpdate({
-      nome: req.params.nome
+      name: req.params.name
     },
-    {$set: {email: req.body.email}
+    {$set: {username: req.body.username, 
+    		password: req.body.password,
+    		admin: req.body.admin}, 
 	},
     {upsert: true},
     function(err, pessoa){
@@ -76,9 +81,9 @@ express()
     })
   })
 
-.delete('/people/:nome', function(req, res){
+.delete('/people/:name', function(req, res){
   User.findOneAndRemove(
-    {nome: req.params.nome},
+    {name: req.params.name},
     function(err, pessoa){
       if(err){
         res.send('err has ocurred');
