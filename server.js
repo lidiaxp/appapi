@@ -5,8 +5,7 @@ var express  = require('express'),
     usuario = new mongoose.Schema({
       id       : String, 
       nome     : String,
-      email   : String,
-      age     : Number
+      email   : String
     }),
 
     User = mongoose.model('User', usuario);
@@ -65,8 +64,7 @@ express()
     User.findOneAndUpdate({
       nome: req.params.nome
     },
-    {$set: {email: req.body.email}, 
-     $set: {age: req.body.age}
+    {$set: {email: req.body.email}
 	},
     {upsert: true},
     function(err, pessoa){
