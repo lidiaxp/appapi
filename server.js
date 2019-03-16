@@ -34,8 +34,8 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-    User.find( function ( err, todos ){
-      res.json(200, todos);
+    User.find( function ( err, users ){
+      res.json(200, users);
     });
   })
 
