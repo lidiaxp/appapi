@@ -9,7 +9,7 @@ var express  = require('express'),
       age     : { type: Number, min: 18 }
     }),
 
-    User = mongoose.model('User', usuario);
+    User = mongoose.model('Todo', usuario);
 
 mongoose.connect(process.env.MONGOLAB_URI, function (error) {
     if (error) console.error(error);
@@ -52,7 +52,7 @@ express()
   })
 
   .get('/people/:nome', function(req, res){
-    User.findOne({
+    Todo.findOne({
       nome: req.params.nome
     })
     .exec(function(err, pessoa){
