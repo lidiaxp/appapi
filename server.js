@@ -4,9 +4,9 @@ var express  = require('express'),
 
     usuario = new mongoose.Schema({
       id       : String, 
-      nome     : { type: String, required: true },
-      email   : { type: String, required: true },
-      age     : { type: Number, min: 18 }
+      nome     : String,
+      email   : String,
+      age     : Number
     }),
 
     User = mongoose.model('User', usuario);
@@ -42,9 +42,6 @@ express()
 
   .post('/people', function (req, res) {
     var user = new User( req.body );
-	user.nome = new User(req.body.nome);
-	user.email =new User( req.body.email);
-	user.age = new User(req.body.age);
     // http://mongoosejs.com/docs/api.html#model_Model-save
     user.save(function (err) {
       res.json(200, user);
