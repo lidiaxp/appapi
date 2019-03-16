@@ -35,8 +35,8 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-    User.find( function ( err, todos ){
-      res.json(200, todos);
+    User.find( function ( err, usuario){
+      res.json(200, usuario);
     });
   })
 
@@ -55,11 +55,11 @@ express()
     User.findOne({
       nome: req.params.nome
     })
-    .exec(function(err, pessoa){
+    .exec(function(err, usuario){
       if(err){
         res.send('err has ocurred');
       }else{
-        res.json(pessoa);
+        res.json(usuario);
       }
     })
   })
@@ -72,11 +72,11 @@ express()
      $set: {age: req.body.age}
 	},
     {upsert: true},
-    function(err, sensor){
+    function(err, usuario){
       if(err){
         res.send('err has ocurred');
       }else{
-        res.json(sensor);
+        res.json(usuario);
       }
     })
   })
@@ -84,11 +84,11 @@ express()
 .delete('/people/:nome', function(req, res){
   User.findOneAndRemove(
     {nome: req.params.nome},
-    function(err, sensor){
+    function(err, usuario){
       if(err){
         res.send('err has ocurred');
       } else{
-        res.send(sensor);
+        res.send(usuario);
       }
     })
   })
