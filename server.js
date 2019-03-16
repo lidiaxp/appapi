@@ -36,9 +36,10 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-    User.find( function ( err, pessoas){
+	res.send(User);
+    /*User.find( function ( err, pessoas){
       res.json(200, pessoas);
-    });
+    });*/
   })
 
   .post('/people', function (req, res) {
