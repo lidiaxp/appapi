@@ -2,15 +2,13 @@ var express  = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
 
-    usuario = new mongoose.Schema({
+    Schema = new mongoose.Schema({
       id       : String, 
       nome     : String,
-      email   : String,
-      age     : Number
+      estado   : String
     }),
 
-    User = mongoose.model('User', usuario);
-
+    Todo = mongoose.model('Todo', Schema);
 
 mongoose.connect(process.env.MONGOLAB_URI, function (error) {
     if (error) console.error(error);
@@ -34,61 +32,58 @@ express()
 	res.send('ola');
    })
 
-  .get('/people', function (req, res) {
+  .get('/sensor', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-	//res.send(User);
-    User.find( function ( err, pessoas){
-      res.json(200, pessoas);
+    Todo.find( function ( err, todos ){
+      res.json(200, todos);
     });
   })
 
-  .post('/people', function (req, res) {
-    var user = new User( req.body );
-    user.id = user._id;
+  .post('/sensor', function (req, res) {
+    var todo = new Todo( req.body );
+    todo.id = todo._id;
     // http://mongoosejs.com/docs/api.html#model_Model-save
-    user.save(function (err) {
-      res.json(200, user);
+    todo.save(function (err) {
+      res.json(200, todo);
     });
   })
 
-  .get('/people/:nome', function(req, res){
-    User.findOne({
+  .get('/sensor/:nome', function(req, res){
+    Todo.findOne({
       nome: req.params.nome
     })
-    .exec(function(err, pessoa){
-      if(err){
-        res.send(err);
-      }else{
-        res.json(pessoa);
-      }
-    })
-  })
-
-  .put('/people/:nome', function(req, res){
-    User.findOneAndUpdate({
-      nome: req.params.nome
-    },
-    {$set: {email: req.body.email}, 
-     $set: {age: req.body.age}
-	},
-    {upsert: true},
-    function(err, pessoa){
+    .exec(function(err, sensor){
       if(err){
         res.send('err has ocurred');
       }else{
-        res.json(pessoa);
+        res.json(sensor.estado);
       }
     })
   })
 
-.delete('/people/:nome', function(req, res){
-  User.findOneAndRemove(
+  .put('/sensor/:nome', function(req, res){
+    Todo.findOneAndUpdate({
+      nome: req.params.nome
+    },
+    {$set: {estado: req.body.estado}},
+    {upsert: true},
+    function(err, sensor){
+      if(err){
+        res.send('err has ocurred');
+      }else{
+        res.json(sensor);
+      }
+    })
+  })
+
+.delete('/sensor/:nome', function(req, res){
+  Todo.findOneAndRemove(
     {nome: req.params.nome},
-    function(err, pessoa){
+    function(err, sensor){
       if(err){
         res.send('err has ocurred');
       } else{
-        res.send(pessoa);
+        res.send(sensor);
       }
     })
   })
