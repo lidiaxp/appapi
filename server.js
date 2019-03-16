@@ -42,9 +42,9 @@ express()
 
   .post('/people', function (req, res) {
     var user = new User( req.body );
-	user.nome = req.body.nome;
-	user.email = req.body.email;
-	user.age = req.body.age;
+	user.nome = new User(req.body.nome);
+	user.email =new User( req.body.email);
+	user.age = new User(req.body.age);
     // http://mongoosejs.com/docs/api.html#model_Model-save
     user.save(function (err) {
       res.json(200, user);
