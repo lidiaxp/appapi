@@ -9,7 +9,7 @@ var express  = require('express'),
       age     : { type: Number, min: 18 }
     }),
 
-    Todo = mongoose.model('Todo', usuario);
+    User = mongoose.model('User', usuario);
 
 
 mongoose.connect(process.env.MONGOLAB_URI, function (error) {
@@ -36,16 +36,16 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-    Todo.find( function ( err, pessoas){
+    User.find( function ( err, pessoas){
       res.json(200, pessoas);
     });
   })
 
   .post('/people', function (req, res) {
-    var user = new Todo( req.body );
-    user.nome = new Todo(req.body.nome); 
-    user.email = new Todo(req.body.email);
-    user.age = new Todo(req.body.age);
+    var user = new User( req.body );
+    user.nome = new User(req.body.nome); 
+    user.email = new User(req.body.email);
+    user.age = new User(req.body.age);
     // http://mongoosejs.com/docs/api.html#model_Model-save
     user.save(function (err) {
       res.json(200, user);
@@ -53,7 +53,7 @@ express()
   })
 
   .get('/people/:nome', function(req, res){
-    Todo.findOne({
+    User.findOne({
       nome: req.params.nome
     })
     .exec(function(err, pessoa){
@@ -66,7 +66,7 @@ express()
   })
 
   .put('/people/:nome', function(req, res){
-    Todo.findOneAndUpdate({
+    User.findOneAndUpdate({
       nome: req.params.nome
     },
     {$set: {email: req.body.email}, 
@@ -83,7 +83,7 @@ express()
   })
 
 .delete('/people/:nome', function(req, res){
-  Todo.findOneAndRemove(
+  User.findOneAndRemove(
     {nome: req.params.nome},
     function(err, pessoa){
       if(err){
