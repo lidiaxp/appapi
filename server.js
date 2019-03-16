@@ -4,9 +4,9 @@ var express  = require('express'),
 
     usuario = new mongoose.Schema({
       id       : String, 
-      nome     : { type: String, required: true },
-      email   : { type: String, required: true },
-      age     : { type: Number, min: 18 }
+      nome     : String,
+      email   : String,
+      age     : Number
     }),
 
     User = mongoose.model('User', usuario);
@@ -36,11 +36,9 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-   res.send('ola');
-	/*
-	User.find( function ( err, pessoas){
+    User.find( function ( err, pessoas){
       res.json(200, pessoas);
-    });*/
+    });
   })
 
   .post('/people', function (req, res) {
