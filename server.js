@@ -36,17 +36,17 @@ express()
 
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
-	res.send(User);
-    /*User.find( function ( err, pessoas){
+	//res.send(User);
+    User.find( function ( err, pessoas){
       res.json(200, pessoas);
-    });*/
+    });
   })
 
   .post('/people', function (req, res) {
     var user = new User( req.body );
-    user.nome = new User(req.body.nome); 
-    user.email = new User(req.body.email);
-    user.age = new User(req.body.age);
+    user.nome = req.body.nome; 
+    user.email = req.body.email;
+    user.age = req.body.age;
     // http://mongoosejs.com/docs/api.html#model_Model-save
     user.save(function (err) {
       res.json(200, user);
