@@ -35,6 +35,10 @@ express()
 	res.send('ola');
    })
 
+.get('/poke', function(req, res){
+	res.send('pokemon');
+   })
+
   .get('/people', function (req, res) {
     // http://mongoosejs.com/docs/api.html#query_Query-find
     User.find({}, function ( err, pessoas ){
