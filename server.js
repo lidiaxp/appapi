@@ -79,7 +79,7 @@ express()
         }
       console.log(frase);
     });
-    res.send(frase);
+    res.send(req.body.name);
   })
 
   .post('/people', function (req, res) {
