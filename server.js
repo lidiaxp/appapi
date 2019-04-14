@@ -62,6 +62,26 @@ express()
     });
   })
 
+	.post('/poke', function (req, res) {
+    console.log(req.body.name);
+    request('https://pokeapi.co/api/v2/pokemon/eevee', { json: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
+        frase = 'As habilidades desse Pokémon são ';
+        for (var i = body.abilities.length - 1; i >= 0; i--) {
+          frase += body.abilities[i].ability.name;
+          if (i == 0){
+            frase += '.';
+          }else if(i == 1){
+            frase += ' e ';
+          }else{
+            frase += ', ';
+          }
+        }
+      console.log(frase);
+    });
+    res.send(frase);
+  })
+
   .post('/people', function (req, res) {
     var user = new User( req.body );
     // http://mongoosejs.com/docs/api.html#model_Model-save
