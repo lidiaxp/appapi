@@ -64,7 +64,7 @@ express()
 
 	.post('/poke', function (req, res) {
     var pokemon = req.body.queryResult.parameters['pokemon'];
-    request('https://pokeapi.co/api/v2/pokemon/' + req.query, { json: true }, (err, res, body) => {
+    request('https://pokeapi.co/api/v2/pokemon/' + pokemon, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
         frase = 'As habilidades do '+ pokemon +' são ';
         for (var i = body.abilities.length - 1; i >= 0; i--) {
