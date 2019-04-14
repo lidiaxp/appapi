@@ -1,6 +1,7 @@
 var express  = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
+    https = require('https');
     Schema = mongoose.Schema;
 
     var userSchema = new Schema({
@@ -36,6 +37,22 @@ express()
    })
 
 .get('/poke', function(req, res){
+	https.get('https://pokeapi.co/api/v2/pokemon/pikachu', (resp) => {
+  let data = '';
+
+  // A chunk of data has been recieved.
+  resp.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received. Print out the result.
+  resp.on('end', () => {
+    console.log(JSON.parse(data).explanation);
+  });
+
+}).on("error", (err) => {
+  console.log("Error: " + err.message);
+});
 	res.send('pokemon');
    })
 
