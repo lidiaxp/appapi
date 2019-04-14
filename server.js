@@ -1,7 +1,7 @@
 var express  = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
-    https = require('https');
+    request = require('request');
     Schema = mongoose.Schema;
 
     var userSchema = new Schema({
@@ -37,23 +37,22 @@ express()
    })
 
 .get('/poke', function(req, res){
-	https.get('https://pokeapi.co/api/v2/pokemon/pikachu', (resp) => {
-  let data = '';
-
-  // A chunk of data has been recieved.
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  // The whole response has been received. Print out the result.
-  resp.on('end', () => {
-    console.log(JSON.parse(data).explanation);
-  });
-
-}).on("error", (err) => {
-  console.log("Error: " + err.message);
-});
-	res.send('pokemon');
+	  request('https://pokeapi.co/api/v2/pokemon/eevee', { json: true }, (err, res, body) => {
+      if (err) { return console.log(err); }
+        frase = 'As habilidades desse Pokémon são ';
+        for (var i = body.abilities.length - 1; i >= 0; i--) {
+          frase += body.abilities[i].ability.name;
+          if (i == 0){
+            frase += '.';
+          }else if(i == 1){
+            frase += ' e ';
+          }else{
+            frase += ', ';
+          }
+        }
+      console.log(frase);
+      });
+	 res.send(frase);
    })
 
   .get('/people', function (req, res) {
