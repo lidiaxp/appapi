@@ -63,8 +63,7 @@ express()
   })
 
 	.post('/poke', function (req, res) {
-    console.log(req.body.name);
-    request('https://pokeapi.co/api/v2/pokemon/eevee', { json: true }, (err, res, body) => {
+    request('https://pokeapi.co/api/v2/pokemon/' + req.body.name, { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
         frase = 'As habilidades desse Pokémon são ';
         for (var i = body.abilities.length - 1; i >= 0; i--) {
@@ -79,7 +78,7 @@ express()
         }
       console.log(frase);
     });
-    res.send(req.body.name);
+    res.send(frase);
   })
 
   .post('/people', function (req, res) {
