@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGOLAB_URI, function (error) {
 express()
   // https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
   .use(bodyParser.json()) // support json encoded bodies
-  .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies
+  .use(bodyParser.urlencoded({ extended: true })) // support encoded bodies -> I am a test
 
   .use(function(req, res, next){
 		res.setHeader("Access-Control-allow-Origin", "*");
