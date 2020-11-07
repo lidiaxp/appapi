@@ -9,6 +9,7 @@ var express  = require('express'),
       name: String,
   	  username: { type: String, required: true, unique: true },
 	  password: { type: String, required: true },
+	  altura: { type: String, required: true },
       admin: Boolean,
     });
 
@@ -118,6 +119,7 @@ express()
     },
     {$set: {username: req.body.username, 
     		password: req.body.password,
+	    	altura: req.body.altura,
     		admin: req.body.admin}, 
 	},
     {upsert: true},
